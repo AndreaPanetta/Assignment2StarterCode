@@ -15,6 +15,12 @@ void setup()
 void draw()
 {
   background(backdrop);
+  //BoxLines
+  line(5,5,945,5); //Top Line
+  line(5,5,5,525);//Left Line
+  line(945,5,945,525);//Right Line
+  line(5,525,945,525); //Bottom Line
+  strokeWeight(5);
   
   for(Player player:players)
   {
@@ -74,6 +80,22 @@ void setUpPlayerControllers()
             i
             , color(random(0, 255), random(0, 255), random(0, 255))
             , playerXML);
+    int x = (i + 1) * gap;
+    p.pos.x = x;
+    p.pos.y = 300;
+   players.add(p);         
+  }
+}
+
+void setUpEnemies()
+{
+  int gap = width / (children.length + 1);
+  
+  for(int i = 0 ; i < children.length ; i ++)  
+  {
+    Enemy e = new Enemy(
+            i
+            , color(random(0, 255), random(0, 255), random(0, 255));
     int x = (i + 1) * gap;
     p.pos.x = x;
     p.pos.y = 300;
