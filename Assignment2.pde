@@ -1,22 +1,21 @@
-/*
-    DIT OOP Assignment 2 Starter Code
-    =================================
-    
-    Loads player properties from an xml file
-    See: https://github.com/skooter500/DT228-OOP 
-*/
+PImage backdrop, img1, img2;
 
 ArrayList<Player> players = new ArrayList<Player>();
 boolean[] keys = new boolean[526];
 
 void setup()
 {
-  size(500, 500);
+  //img1=loadImage("splash.jpg");
+  size(950, 533);
+  backdrop = loadImage("background.jpg");
   setUpPlayerControllers();
+  //img2=loadImage("dead.jpg");
 }
 
 void draw()
 {
+  background(backdrop);
+  
   for(Player player:players)
   {
     player.update();
