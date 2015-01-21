@@ -1,4 +1,4 @@
-class Enemy
+/*class Enemy
 {
   float x = random(width,2*width+60);
   float y = random(height);
@@ -11,4 +11,4 @@ class Enemy
     }
   }
 }
-
+*/
