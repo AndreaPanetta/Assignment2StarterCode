@@ -4,10 +4,10 @@
 		<down>s</down>
 		<left>a</left>
 		<right>d</right>
-		<start>q</start>
+		<start>t</start>
 		<insertcoin>5</insertcoin>
 		<button1>e</button1>
-		<button2>r</button2>
+		<button2>q</button2>
 	</player>
 	<player>
 		<up>i</up>
@@ -16,7 +16,7 @@
 		<right>l</right>
 		<start>p</start>
 		<insertcoin>5</insertcoin>
-		<button1>p</button1>
-		<button2>[</button2>
+		<button1>o</button1>
+		<button2>u</button2>
 	</player>
 </arcade>	

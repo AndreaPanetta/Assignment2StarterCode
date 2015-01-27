@@ -1,15 +1,39 @@
+import ddf.minim.*;
+
 PImage backdrop, img1, img2;
 
 ArrayList<Player> players = new ArrayList<Player>();
 boolean[] keys = new boolean[526];
+int menuchange =0;
+
+boolean devMode = false;
+boolean sketchFullScreen()
+{
+  return ! devMode;
+}
+
+//Audio Content
+AudioPlayer song;
+Minim minim;
 
 void setup()
 {
-  //img1=loadImage("splash.jpg");
-  size(950, 533);
-  //backdrop = loadImage("background.jpg");
+  img1=loadImage("splash.jpg");
+  minim = new Minim(this);
+  song = minim.loadFile("sounds.mp3");
+  song.play();
+  backdrop = loadImage("background.jpg");
   setUpPlayerControllers();
   //img2=loadImage("dead.jpg");
+  
+  if (devMode)
+  {
+    size(950, 533);
+  }
+  else
+  {
+    size(displayWidth, displayHeight);
+  }
 }
 
 void draw()
@@ -18,32 +42,34 @@ void draw()
   background(0);
   
   //BoxLines
-  line(5,5,945,5); //Top Line
-  line(5,5,5,525);//Left Line
-  line(945,5,945,525);//Right Line
-  line(5,525,945,525); //Bottom Line
+  line(5,5,1362,5); //Top Line
+  line(5,5,5,760);//Left Line
+  line(1363,5,1363,758);//Right Line
+  line(5,760,1362,760); //Bottom Line
   strokeWeight(5);
   
   //MazeLines and Obsticles 
-  line(5,180,170,180); //line 1
-  line(5,350,170,350);// line 2
-  line(170,260,170,350); //line 3
-  line(width/2,5,width/2,200); //line 4
-  line(width/2,525,width/2,350); //line 5
-  line(width/2,350,650,350); //line 6
-  line(800,180,945,180); //line 7
-  line(800,180,800,450); //line 8 
-  line(600,450,800,450); //line 9
+  line(5,280,250,280); //line 1
+  line(5,500,250,500);// line 2
+  line(170,360,170,500); //line 3
+  line(width/2,5,width/2,390); //line 4
+  line(width/2,600,width/2,760); //line 5
+  line(width/2,600,1000,600); //line 6
+  line(1154,250,1362,250); //line 7
+  line(1154,250,1154,650); //line 8 
+  line(900,650,1154,650); //line 9
   line(400,50,width/2,50); //line 10
-  line(150,525,150,420); //line 11
-  line(700,5,700,70); //line 12
-  line(400,200,550,200); //line 13
-  line(250,5,250,100); //line 14
+  line(250,760,250,570); //line 11
+  line(950,5,950,150); //line 12
+  line(500,390,800,390); //line 13
+  line(300,5,300,150); //line 14
   
+  //Square blockades
   fill(177,219,250);//square fill
-  rect(90, 60, 55, 55); //square 1
-  rect(220, 400, 200, 75); //square 2
-  rect(620, 125, 100, 100); //square 3
+  rect(110, 100, 75, 75); //square 1
+  rect(360, 600, 200, 75); //square 2
+  rect(900, 250, 100, 100); //square 3
+  rect(375, 200, 100, 100); //square 4
   
   
   for(Player player:players)
@@ -51,11 +77,25 @@ void draw()
     player.update();
     player.display();
   }
+  
+  if(menuchange==0)
+  {
+    image(img1,0,0);
+  }
 }
-
+  
 void keyPressed()
 {
   keys[keyCode] = true;
+  
+  if(key == 'p')
+  {
+    menuchange++;
+  }
+  if(key == 'g')
+  {
+    exit();
+  }
 }
 
 void keyReleased()
@@ -87,7 +127,7 @@ char buttonNameToKey(XML xml, String buttonName)
   {
     return DOWN;
   }
-  //.. Others to follow
+
   return value.charAt(0);  
 }
 
