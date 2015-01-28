@@ -1,16 +1,23 @@
 import ddf.minim.*;
 
-PImage backdrop, img1, img2;
+PImage backdrop, img1, img2, prize;
 
 ArrayList<Player> players = new ArrayList<Player>();
+ArrayList<Enemy> sliders = new ArrayList<Enemy>();
 boolean[] keys = new boolean[526];
 int menuchange =0;
+float speed = 9.6;
+
+float centX = 50;
+float centY = 200;
+int numEnemies = 10;
 
 boolean devMode = false;
 boolean sketchFullScreen()
 {
   return ! devMode;
 }
+
 
 //Audio Content
 AudioPlayer song;
@@ -19,12 +26,18 @@ Minim minim;
 void setup()
 {
   img1=loadImage("splash.jpg");
+  makeEnemies();
   minim = new Minim(this);
   song = minim.loadFile("sounds.mp3");
   song.play();
-  backdrop = loadImage("background.jpg");
+
   setUpPlayerControllers();
   //img2=loadImage("dead.jpg");
+  
+  //for (int i = 0; i < sliders.size(); i++) 
+  {
+   // sliders.get(i) = new Enemy(); // Create each object
+  }
   
   if (devMode)
   {
@@ -40,6 +53,25 @@ void draw()
 {
   //background(backdrop);
   background(0);
+  /*for(Enemy e:enemies)
+  {
+    e.display();
+  }*/
+  //Collision();
+  
+  for (int i = 0; i < sliders.size(); i++) 
+  {
+    for( int j =0; j < players.size(); j++)
+    {
+      if(players.get(j).pos.y - 20 < sliders.get(i).pos.y + 20 &&
+            players.get(j).pos.y + 20 > sliders.get(i).pos.y &&
+            players.get(j).pos.x - 20 < sliders.get(i).pos.x + 20 &&
+            players.get(j).pos.x + 20 > sliders.get(i).pos.x)
+       {
+         players.get(i).alive = false;
+       }  
+    }
+  }
   
   //BoxLines
   line(5,5,1362,5); //Top Line
@@ -71,6 +103,24 @@ void draw()
   rect(900, 250, 100, 100); //square 3
   rect(375, 200, 100, 100); //square 4
   
+  //Prizes
+ fill(255,255,255);
+ ellipse(660, 25, 20, 20); //Prize 1
+ ellipse(1345, 268, 20, 20); //Prize 2
+ ellipse(25, 740, 20, 20); //Prize 3
+ ellipse(190, 480, 20, 20); //Prize 4
+ ellipse(25, 25, 20, 20); //Prize 5
+ ellipse(700, 370, 20, 20); //Prize 6
+ ellipse(980, 25, 20, 20); //Prize 7
+ ellipse(650, 740, 20, 20); //Prize 8
+  
+  //Creates 5 enemies
+   
+  for (int i= 0;i<5; i++)
+  {
+    Enemy e = new Enemy();
+     sliders.add(e);
+   }  
   
   for(Player player:players)
   {
@@ -78,12 +128,29 @@ void draw()
     player.display();
   }
   
+  for (int i = 0; i < sliders.size(); i++) 
+  {
+    sliders.get(i).slide();
+  }
+  
   if(menuchange==0)
   {
     image(img1,0,0);
   }
-}
   
+  
+}
+
+
+/*void enemies()
+  { 
+      Enemy e = new Enemy();
+      e.pos.x = random(0,480);
+      e.pos.y = random(0,480);
+      e.colour = color(0,255,0);
+    
+  }
+  */
 void keyPressed()
 {
   keys[keyCode] = true;
@@ -151,16 +218,11 @@ void setUpPlayerControllers()
   }
 }
 
-/*void setUpEnemies()
+void makeEnemies()
 {
-  int gap = width / (children.length + 1);
-  
-  for(int i = 0 ; i < children.length ; i ++)  
+  for(int i =0; i < 25; i++)
   {
-    Enemy e = new Enemy(i, color(random(0, 255), random(0, 255), random(0, 255));
-    int x = (i + 1) * gap;
-    p.pos.x = x;
-    p.pos.y = 300;
-   players.add(p);         
+    Enemy e = new Enemy();
+    sliders.add(e);
   }
-}*/
+}
