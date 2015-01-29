@@ -1,9 +1,8 @@
 import ddf.minim.*;
 
-PImage backdrop, img1, img2, prize;
+PImage backdrop, img1, img2,img3, prize;
 
 ArrayList<Player> players = new ArrayList<Player>();
-ArrayList<Enemy> sliders = new ArrayList<Enemy>();
 boolean[] keys = new boolean[526];
 int menuchange =0;
 float speed = 9.6;
@@ -11,12 +10,16 @@ float speed = 9.6;
 float centX = 50;
 float centY = 200;
 int numEnemies = 10;
+boolean image = true;
+boolean image2 = false;
 
 boolean devMode = false;
 boolean sketchFullScreen()
 {
   return ! devMode;
 }
+
+Enemy[] sliders = new Enemy[numEnemies];
 
 
 //Audio Content
@@ -26,7 +29,8 @@ Minim minim;
 void setup()
 {
   img1=loadImage("splash.jpg");
-  makeEnemies();
+  img3 = loadImage("instruct.jpg");
+  //makeEnemies();
   minim = new Minim(this);
   song = minim.loadFile("sounds.mp3");
   song.play();
@@ -34,9 +38,9 @@ void setup()
   setUpPlayerControllers();
   //img2=loadImage("dead.jpg");
   
-  //for (int i = 0; i < sliders.size(); i++) 
+  for (int i = 0; i < sliders.length; i++) 
   {
-   // sliders.get(i) = new Enemy(); // Create each object
+    sliders[i] = new Enemy(); // Create each object
   }
   
   if (devMode)
@@ -53,24 +57,23 @@ void draw()
 {
   //background(backdrop);
   background(0);
-  /*for(Enemy e:enemies)
+  if( image == true)
   {
-    e.display();
-  }*/
+    image(img1,0,0,width,height);
+    if(image2 == true)
+    {
+      image(img3,0,0,width,height);
+    }
+  }
+  else
+  {
+
   //Collision();
   
-  for (int i = 0; i < sliders.size(); i++) 
+  //Enemy for loop
+  for (int i = 0; i < sliders.length; i++) 
   {
-    for( int j =0; j < players.size(); j++)
-    {
-      if(players.get(j).pos.y - 20 < sliders.get(i).pos.y + 20 &&
-            players.get(j).pos.y + 20 > sliders.get(i).pos.y &&
-            players.get(j).pos.x - 20 < sliders.get(i).pos.x + 20 &&
-            players.get(j).pos.x + 20 > sliders.get(i).pos.x)
-       {
-         players.get(i).alive = false;
-       }  
-    }
+    sliders[i].slide();
   }
   
   //BoxLines
@@ -112,25 +115,12 @@ void draw()
  ellipse(25, 25, 20, 20); //Prize 5
  ellipse(700, 370, 20, 20); //Prize 6
  ellipse(980, 25, 20, 20); //Prize 7
- ellipse(650, 740, 20, 20); //Prize 8
-  
-  //Creates 5 enemies
-   
-  for (int i= 0;i<5; i++)
-  {
-    Enemy e = new Enemy();
-     sliders.add(e);
-   }  
+ ellipse(650, 740, 20, 20); //Prize 8 
   
   for(Player player:players)
   {
     player.update();
     player.display();
-  }
-  
-  for (int i = 0; i < sliders.size(); i++) 
-  {
-    sliders.get(i).slide();
   }
   
   if(menuchange==0)
@@ -140,24 +130,20 @@ void draw()
   
   
 }
+}
 
-
-/*void enemies()
-  { 
-      Enemy e = new Enemy();
-      e.pos.x = random(0,480);
-      e.pos.y = random(0,480);
-      e.colour = color(0,255,0);
-    
-  }
-  */
 void keyPressed()
 {
   keys[keyCode] = true;
   
   if(key == 'p')
   {
+    image = false;
     menuchange++;
+  }
+  if(key == '5')
+  {
+    image2 =! image2;
   }
   if(key == 'g')
   {
@@ -218,11 +204,7 @@ void setUpPlayerControllers()
   }
 }
 
-void makeEnemies()
+/*void hitWalls()
 {
-  for(int i =0; i < 25; i++)
-  {
-    Enemy e = new Enemy();
-    sliders.add(e);
-  }
-}
+  if(
+}*/

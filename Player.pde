@@ -1,8 +1,7 @@
-class Player
+class Player extends gameObject
 {
-  PVector pos;
-  float playerX=50;
-  float playerY=50;
+  //float playerX=50;
+  //f//loat playerY=50;
   char up;
   char down;
   char left;
@@ -14,12 +13,11 @@ class Player
   color colour;
   float starts,stop;
   float rotation =0;
-  boolean alive;
+
     
   Player()
   {
     pos = new PVector(width / 2, height / 2);
-    alive = true;
   }
   
   Player(int index, color colour, char up, char down, char left, char right, char start, char button1, char button2)
@@ -52,19 +50,17 @@ class Player
   
   void update()
   {
-    float velocity1 = speed;
+    /*float velocity1 = speed;
     //starts =rotation;
     //stop = (PI*2) - rotation; 
-    
-    
-    color underPlayer1 = backdrop.get((int)pos.x+15, (int)pos.y+12);
+  
     color underPlayer2 = backdrop.get((int)pos.x+15, (int)pos.y-12);
       
     if(red(underPlayer1) >= 250.0 && green(underPlayer1) >= 250.0 && blue(underPlayer1) >= 250.0 || red(underPlayer2) >= 250.0 && green(underPlayer2) >= 250.0 && blue(underPlayer2) >= 250.0)
     {
       fill(0);
       stroke(0);
-    }
+    }*/
     
     if (checkKey(up))
     {

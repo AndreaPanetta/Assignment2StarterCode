@@ -1,31 +1,21 @@
-class Enemy
-{ 
-  
-  PVector pos;
-  PVector go;
-    
-    Enemy()
-    {
-      pos.x = (int)random(width, 2*width+1000);
-      pos.y = height - 10;
-      
-      go.x = -3.5;
-      go.y = 0;
-    }
-  
-  void slide()
+class Enemy extends gameObject
+{
+  Enemy()
   {
-    
-    pos.add(go);
-     fill(0,10,200,180);
-     rect(pos.x, pos.y, 20, 20);
+    pos.x = random(width,2*width+60);
+    pos.y = random(height);
+  }
+
+  void slide() 
+  {
+      pos.x -= 5;
+      fill(0,10,200,180);
+      rect(pos.x, pos.y, 20, 20);
 
      if(pos.x<0)
      {
        pos.x = width+30;
-       pos.y = height - 10;
+       pos.y = random(height);
      }
-     
-     
   }
-} 
+}
